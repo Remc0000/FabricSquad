@@ -1,0 +1,86 @@
+measure 'Total Vehicles' = SUM(fact_vehicle_registration[vehicle_count])
+	formatString: #,0
+	lineageTag: f1a7b2c8-3d4e-5f6a-0b1c-2d3e4f5a6b7c
+
+measure 'Total CO2 Emissions' = SUM(fact_vehicle_emissions[co2_uitstoot])
+	formatString: #,0
+	lineageTag: a2b8c3d9-4e5f-6a7b-1c2d-3e4f5a6b7c8d
+	displayFolder: "Emissions"
+
+measure 'Average CO2 per Vehicle' = 
+		DIVIDE(
+			[Total CO2 Emissions],
+			[Total Vehicles],
+			0
+		)
+	formatString: #,0.00
+	lineageTag: b3c9d4e0-5f6a-7b8c-2d3e-4f5a6b7c8d9e
+	displayFolder: "Emissions"
+
+measure 'Total Parking Capacity' = SUM(fact_parking_capacity[capacity])
+	formatString: #,0
+	lineageTag: c4d0e5f1-6a7b-8c9d-3e4f-5a6b7c8d9e0f
+	displayFolder: "Parking"
+
+measure 'Electric Vehicles' = 
+		CALCULATE(
+			[Total Vehicles],
+			dim_fuel_type[brandstof_omschrijving] = "Elektriciteit"
+		)
+	formatString: #,0
+	lineageTag: d5e1f6a2-7b8c-9d0e-4f5a-6b7c8d9e0f1a
+	displayFolder: "Fuel Analysis"
+
+measure 'Hybrid Vehicles' = 
+		CALCULATE(
+			[Total Vehicles],
+			OR(
+				CONTAINSSTRING(dim_fuel_type[brandstof_omschrijving], "Hybride"),
+				CONTAINSSTRING(dim_fuel_type[brandstof_omschrijving], "Hybrid")
+			)
+		)
+	formatString: #,0
+	lineageTag: e6f2a7b3-8c9d-0e1f-5a6b-7c8d9e0f1a2b
+	displayFolder: "Fuel Analysis"
+
+measure 'Average Vehicle Weight' = 
+		DIVIDE(
+			SUM(fact_vehicle_emissions[massa_ledig_voertuig]),
+			[Total Vehicles],
+			0
+		)
+	formatString: #,0
+	lineageTag: f7a3b8c4-9d0e-1f2a-6b7c-8d9e0f1a2b3c
+	displayFolder: "Vehicle Stats"
+
+measure 'Average Engine Power' = 
+		DIVIDE(
+			SUM(fact_vehicle_emissions[nettomaximumvermogen]),
+			[Total Vehicles],
+			0
+		)
+	formatString: #,0
+	lineageTag: a8b4c9d5-0e1f-2a3b-7c8d-9e0f1a2b3c4d
+	displayFolder: "Vehicle Stats"
+
+measure 'Vehicles by Fuel Type' = 
+		CALCULATE(
+			[Total Vehicles],
+			ALLEXCEPT(dim_fuel_type, dim_fuel_type[brandstof_omschrijving])
+		)
+	formatString: #,0
+	lineageTag: b9c5d0e6-1f2a-3b4c-8d9e-0f1a2b3c4d5e
+	displayFolder: "Fuel Analysis"
+
+measure 'Top Brand Market Share' = 
+		VAR TopBrandCount = 
+			CALCULATE(
+				[Total Vehicles],
+				TOPN(1, ALL(dim_vehicle[merk]), [Total Vehicles], DESC)
+			)
+		RETURN
+			DIVIDE(TopBrandCount, [Total Vehicles], 0)
+	formatString: 0.00%
+	lineageTag: c0d6e1f7-2a3b-4c5d-9e0f-1a2b3c4d5e6f
+	displayFolder: "Market Analysis"
+

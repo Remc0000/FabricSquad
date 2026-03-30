@@ -1,0 +1,120 @@
+{
+  "name": "RDW Analytics",
+  "compatibilityLevel": 1605,
+  "model": {
+    "culture": "en-US",
+    "defaultMode": "directLake",
+    "dataSources": [
+      {
+        "type": "structured",
+        "name": "DirectLake_RDWAgentsLake",
+        "connectionDetails": {
+          "protocol": "tds",
+          "address": {
+            "server": "pmip-sqlendpoint-public.pbidedicated.windows.net",
+            "database": "ac035351-73d1-4297-bfbd-6ea91e63eeba"
+          },
+          "authentication": null,
+          "query": null
+        },
+        "options": {
+          "directLakeMode": true
+        }
+      }
+    ],
+    "tables": [
+      {
+        "name": "dim_vehicle",
+        "columns": [
+          {
+            "name": "vehicle_key",
+            "dataType": "int64",
+            "isKey": true,
+            "sourceColumn": "vehicle_key"
+          },
+          {
+            "name": "kenteken",
+            "dataType": "string",
+            "sourceColumn": "kenteken"
+          },
+          {
+            "name": "merk",
+            "dataType": "string",
+            "sourceColumn": "merk"
+          },
+          {
+            "name": "handelsbenaming",
+            "dataType": "string",
+            "sourceColumn": "handelsbenaming"
+          },
+          {
+            "name": "voertuigsoort",
+            "dataType": "string",
+            "sourceColumn": "voertuigsoort"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_vehicle",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "dim_vehicle",
+              "expressionSource": "DirectLake_RDWAgentsLake",
+              "schemaName": "gold"
+            }
+          }
+        ]
+      },
+      {
+        "name": "fact_vehicle_registration",
+        "columns": [
+          {
+            "name": "vehicle_key",
+            "dataType": "int64",
+            "sourceColumn": "vehicle_key"
+          },
+          {
+            "name": "fuel_type_key",
+            "dataType": "int64",
+            "sourceColumn": "fuel_type_key"
+          },
+          {
+            "name": "vehicle_count",
+            "dataType": "int64",
+            "sourceColumn": "vehicle_count"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "fact_vehicle_registration",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "fact_vehicle_registration",
+              "expressionSource": "DirectLake_RDWAgentsLake",
+              "schemaName": "gold"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Total Vehicles",
+            "expression": "SUM(fact_vehicle_registration[vehicle_count])",
+            "formatString": "#,0"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "fact_vehicle_registration_dim_vehicle",
+        "fromTable": "fact_vehicle_registration",
+        "fromColumn": "vehicle_key",
+        "toTable": "dim_vehicle",
+        "toColumn": "vehicle_key",
+        "crossFilteringBehavior": "oneDirection"
+      }
+    ]
+  }
+}

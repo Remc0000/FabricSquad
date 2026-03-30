@@ -1,0 +1,41 @@
+table dim_fuel_type
+	lineageTag: f2a3b4c5-d6e7-4f5a-9b0c-1d2e3f4a5b6c
+
+	column fuel_type_key
+		dataType: int64
+		isKey
+		formatString: 0
+		lineageTag: a3b4c5d6-e7f8-4a5b-0c1d-2e3f4a5b6c7d
+		summarizeBy: none
+		sourceColumn: fuel_type_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column brandstof_omschrijving
+		dataType: string
+		lineageTag: b4c5d6e7-f8a9-4b5c-1d2e-3f4a5b6c7d8e
+		summarizeBy: none
+		sourceColumn: brandstof_omschrijving
+
+		annotation SummarizationSetBy = Automatic
+
+	column brandstof_volgnummer
+		dataType: int64
+		formatString: 0
+		lineageTag: c5d6e7f8-a9b0-4c5d-2e3f-4a5b6c7d8e9f
+		summarizeBy: none
+		sourceColumn: brandstof_volgnummer
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_fuel_type = entity
+		mode: directLake
+		source
+			entityName: dim_fuel_type
+			expressionSource: DirectLake_RDWAgentsLake
+			schemaName: gold
+
+		annotation IsDirectLake = true
+
+	annotation PBI_ResultType = Table
+

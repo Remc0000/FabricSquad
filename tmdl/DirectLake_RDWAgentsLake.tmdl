@@ -1,0 +1,10 @@
+expression DirectLake_RDWAgentsLake = ```
+		let
+			database = Sql.Database("pmip-sqlendpoint-public.pbidedicated.windows.net", "ac035351-73d1-4297-bfbd-6ea91e63eeba", [DirectLakeMode = true])
+		in
+			database
+		```
+	lineageTag: 29a4f1e2-3d2e-4c98-b8e1-5e6d7f8a9b0c
+
+	annotation PBI_QueryRelationships = {"expressions":[{"name":"DirectLake_RDWAgentsLake","expression":"let database = Sql.Database(\"pmip-sqlendpoint-public.pbidedicated.windows.net\", \"ac035351-73d1-4297-bfbd-6ea91e63eeba\", [DirectLakeMode = true]) in database"}]}
+

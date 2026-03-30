@@ -1,0 +1,40 @@
+relationship bf1e7a4c-3d2e-4a5b-8c9d-0e1f2a3b4c5d
+	fromColumn: fact_vehicle_registration.vehicle_key
+	toColumn: dim_vehicle.vehicle_key
+
+relationship c2f8b5d1-4e3f-5b6c-9d0e-1f2a3b4c5d6e
+	fromColumn: fact_vehicle_registration.fuel_type_key
+	toColumn: dim_fuel_type.fuel_type_key
+
+relationship d3a9c6e2-5f4a-6c7d-0e1f-2a3b4c5d6e7f
+	fromColumn: fact_vehicle_registration.location_key
+	toColumn: dim_location.location_key
+
+relationship e4b0d7f3-6a5b-7d8e-1f2a-3b4c5d6e7f8a
+	fromColumn: fact_vehicle_registration.registration_date_key
+	toColumn: dim_date.date_key
+
+relationship f5c1e8a4-7b6c-8e9f-2a3b-4c5d6e7f8a9b
+	fromColumn: fact_vehicle_emissions.vehicle_key
+	toColumn: dim_vehicle.vehicle_key
+
+relationship a6d2f9b5-8c7d-9f0a-3b4c-5d6e7f8a9b0c
+	fromColumn: fact_vehicle_emissions.fuel_type_key
+	toColumn: dim_fuel_type.fuel_type_key
+
+relationship b7e3a0c6-9d8e-0a1b-4c5d-6e7f8a9b0c1d
+	fromColumn: fact_fuel_distribution.fuel_type_key
+	toColumn: dim_fuel_type.fuel_type_key
+
+relationship c8f4b1d7-0e9f-1b2c-5d6e-7f8a9b0c1d2e
+	fromColumn: fact_fuel_distribution.location_key
+	toColumn: dim_location.location_key
+
+relationship d9a5c2e8-1f0a-2c3d-6e7f-8a9b0c1d2e3f
+	fromColumn: fact_parking_capacity.parking_area_key
+	toColumn: dim_parking_area.parking_area_key
+
+relationship e0b6d3f9-2a1b-3d4e-7f8a-9b0c1d2e3f4a
+	fromColumn: fact_parking_capacity.location_key
+	toColumn: dim_location.location_key
+

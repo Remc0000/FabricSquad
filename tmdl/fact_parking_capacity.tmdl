@@ -1,0 +1,41 @@
+table fact_parking_capacity
+	lineageTag: b6c7d8e9-f0a1-4b5c-3d4e-5f6a7b8c9d0e
+
+	column parking_area_key
+		dataType: int64
+		formatString: 0
+		lineageTag: c7d8e9f0-a1b2-4c5d-4e5f-6a7b8c9d0e1f
+		summarizeBy: none
+		sourceColumn: parking_area_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column location_key
+		dataType: int64
+		formatString: 0
+		lineageTag: d8e9f0a1-b2c3-4d5e-5f6a-7b8c9d0e1f2a
+		summarizeBy: none
+		sourceColumn: location_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column capacity
+		dataType: int64
+		formatString: #,0
+		lineageTag: e9f0a1b2-c3d4-4e5f-6a7b-8c9d0e1f2a3b
+		summarizeBy: sum
+		sourceColumn: capacity
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_parking_capacity = entity
+		mode: directLake
+		source
+			entityName: fact_parking_capacity
+			expressionSource: DirectLake_RDWAgentsLake
+			schemaName: gold
+
+		annotation IsDirectLake = true
+
+	annotation PBI_ResultType = Table
+

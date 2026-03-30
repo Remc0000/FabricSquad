@@ -1,0 +1,41 @@
+table fact_fuel_distribution
+	lineageTag: d2e3f4a5-b6c7-4d5e-9f0a-1b2c3d4e5f6a
+
+	column fuel_type_key
+		dataType: int64
+		formatString: 0
+		lineageTag: e3f4a5b6-c7d8-4e5f-0a1b-2c3d4e5f6a7b
+		summarizeBy: none
+		sourceColumn: fuel_type_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column location_key
+		dataType: int64
+		formatString: 0
+		lineageTag: f4a5b6c7-d8e9-4f5a-1b2c-3d4e5f6a7b8c
+		summarizeBy: none
+		sourceColumn: location_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column vehicle_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: a5b6c7d8-e9f0-4a5b-2c3d-4e5f6a7b8c9d
+		summarizeBy: sum
+		sourceColumn: vehicle_count
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_fuel_distribution = entity
+		mode: directLake
+		source
+			entityName: fact_fuel_distribution
+			expressionSource: DirectLake_RDWAgentsLake
+			schemaName: gold
+
+		annotation IsDirectLake = true
+
+	annotation PBI_ResultType = Table
+
