@@ -1,0 +1,22 @@
+{
+  "assignment_cast_snapshots": {
+    "repl-cast-2026-03-30T13:26:43.905Z": {
+      "created_at": "2026-03-30T13:26:43.905Z",
+      "agents": [
+        "danny",
+        "rusty",
+        "linus",
+        "basher",
+        "scribe",
+        "ralph"
+      ],
+      "universe": "Ocean's Eleven"
+    }
+  },
+  "universe_usage_history": [
+    {
+      "universe": "Ocean's Eleven",
+      "used_at": "2026-03-30T13:26:43.905Z"
+    }
+  ]
+}

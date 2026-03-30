@@ -1,0 +1,29 @@
+# Squad: ignore runtime state (logs, inbox, sessions)
+.squad/orchestration-log/
+.squad/log/
+.squad/decisions/inbox/
+.squad/sessions/
+# Squad: SubSquad activation file (local to this machine)
+.squad-workstream
+
+# Temp/debug files from fab CLI exploration
+*.txt
+*.json
+!openspec/**/*.json
+!.squad/**/*.json
+!.github/**/*.json
+!.copilot/**/*.json
+!package.json
+
+# Python
+__pycache__/
+*.pyc
+query_rdw.py
+
+# Cloned repos (use submodules or separate clone)
+skills-for-fabric/
+
+# Debug output
+r1.txt
+r2.txt
+r3.txt
